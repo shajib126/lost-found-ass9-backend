@@ -7,7 +7,7 @@ import { jwtHelpers } from "../../utils/jwtHelpers"
 import { PrismaClient } from "@prisma/client"
 
 const prisma = new PrismaClient()
-
+//auth
 
 const auth = (roles:string[])=>{
     return async (req:Request & {userId?:any,userRole?:string},res:Response,next:NextFunction)=>{
