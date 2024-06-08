@@ -7,7 +7,7 @@ import { claimValidation } from './claim.validation'
 const router = express.Router()
 
 router.post('/claims',auth(['user']),ClaimController.createClaim)
-router.get('/claims',auth(['user']),ClaimController.allClaims)
+router.get('/claims',auth(['user','admin']),ClaimController.allClaims)
 router.get('/me/claims',auth(['user']),ClaimController.myClaims)
 
 export const ClaimRoutes = router
