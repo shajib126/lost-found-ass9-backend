@@ -1,8 +1,7 @@
 # Lost and found server
 ## this appliaction is for found lost material and claim losted material which were founded by someone.
 
-# Posman Documentation
-[Postman Documentation](https://documenter.getpostman.com/view/11981406/2sA3QpDEF2)
+
 
 # installation and setup
 
@@ -27,9 +26,7 @@ npx prisma migrate dev
 ``` 
 ---------------------------------
 
-# postman documentaion
 
-<a href="https://documenter.getpostman.com/view/11981406/2sA3QpDEF2" target="_blank"> Postman doc </a>
 
 
 
