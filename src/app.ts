@@ -4,7 +4,7 @@ import cookieParser from 'cookie-parser'
 import router from './app/routes'
 import globalErrorHandler from './app/middleware/globalErrorHandler'
 import httpStatus from 'http-status'
-
+//app 
 const app:Application = express()
 
 
