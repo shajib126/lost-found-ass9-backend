@@ -1,3 +1,4 @@
+//services
 import { Prisma, PrismaClient } from "@prisma/client";
 import { TLostItems } from "./lostItems.interface";
 const prisma = new PrismaClient()

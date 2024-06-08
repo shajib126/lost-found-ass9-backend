@@ -1,3 +1,4 @@
+//routes
 import express from 'express'
 import auth from '../../middleware/auth'
 import validateRequest from '../../middleware/validateRequest'

@@ -1,5 +1,5 @@
 import {z} from 'zod'
-
+//validation
 const createLostItemSchema =z.object({
     body:z.object({
         categoryId:z.string({required_error:'Category is required'}),

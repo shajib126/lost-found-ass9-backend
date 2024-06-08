@@ -2,7 +2,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../../utils/catchAsync";
 import sendResponse from "../../../utils/sendResponse";
 import { LostItemsServices } from "./lostItems.services";
-
+//lost item controller
 const createLostItem = catchAsync(async(req:any,res)=>{
     const userId = req.userId
    

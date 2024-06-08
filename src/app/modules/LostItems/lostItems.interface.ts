@@ -1,3 +1,4 @@
+//interface
 export type TLostItems = {
     lostItemName:string;
     categoryId:string;
