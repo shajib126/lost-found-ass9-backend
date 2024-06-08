@@ -1,3 +1,4 @@
+//category service
 import { PrismaClient } from "@prisma/client";
 import { TCategory } from "./category.interface";
 const prisma = new PrismaClient()

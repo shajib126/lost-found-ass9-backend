@@ -1,3 +1,4 @@
+//category routes
 import express from 'express'
 import auth from '../../middleware/auth'
 import { CategoryCotroller } from './category.controller'
