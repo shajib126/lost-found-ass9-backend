@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LostItemsValidation = void 0;
 const zod_1 = require("zod");
+//validation
 const createLostItemSchema = zod_1.z.object({
     body: zod_1.z.object({
         categoryId: zod_1.z.string({ required_error: 'Category is required' }),

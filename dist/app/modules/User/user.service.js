@@ -23,7 +23,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserServices = void 0;
+exports.UserServices = exports.deactiveUser = exports.userFromDB = exports.usersFromDB = void 0;
+//user
 const client_1 = require("@prisma/client");
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -75,6 +76,9 @@ const myProfileFromDB = (userId) => __awaiter(void 0, void 0, void 0, function* 
     const user = yield prisma.user.findUnique({
         where: {
             id
+        },
+        include: {
+            profile: true
         }
     });
     return user;
@@ -89,10 +93,7 @@ const updateUserIntoDB = (userId, payload) => __awaiter(void 0, void 0, void 0, 
     if (email) {
         query.email = email;
     }
-    if (image) {
-        query.image = image;
-    }
-    if (bio || age !== undefined) {
+    if (bio || age !== undefined || image) {
         query.profile = {
             update: {}
         };
@@ -102,8 +103,10 @@ const updateUserIntoDB = (userId, payload) => __awaiter(void 0, void 0, void 0, 
         if (age !== undefined) {
             query.profile.update.age = age;
         }
+        if (image) {
+            query.profile.update.image = image;
+        }
     }
-    console.log(query);
     const user = yield prisma.user.update({
         where: { id },
         data: query,
@@ -139,10 +142,47 @@ const changePasswordIntoDB = (userId, payload) => __awaiter(void 0, void 0, void
     });
     return chagedpassword;
 });
+//admin 
+const usersFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const [users, total] = yield prisma.$transaction([
+        prisma.user.findMany({
+            include: { profile: true }
+        }),
+        prisma.user.count()
+    ]);
+    return { users, total };
+});
+exports.usersFromDB = usersFromDB;
+//admin
+const userFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const user = yield prisma.user.findUnique({
+        where: {
+            id
+        },
+        include: {
+            profile: true
+        }
+    });
+    return user;
+});
+exports.userFromDB = userFromDB;
+const deactiveUser = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const query = { deactivated: payload.deactivated };
+    const user = yield prisma.user.update({
+        where: { id },
+        data: query,
+        include: { profile: true }
+    });
+    return user;
+});
+exports.deactiveUser = deactiveUser;
 exports.UserServices = {
     registerIntoDB,
     loginIntoDB,
     myProfileFromDB,
     updateUserIntoDB,
-    changePasswordIntoDB
+    changePasswordIntoDB,
+    usersFromDB: exports.usersFromDB,
+    userFromDB: exports.userFromDB,
+    deactiveUser: exports.deactiveUser
 };

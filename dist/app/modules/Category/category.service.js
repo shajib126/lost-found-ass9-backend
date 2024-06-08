@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryServices = void 0;
+//category service
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const createCategoryIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {

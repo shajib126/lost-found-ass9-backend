@@ -16,7 +16,10 @@ const ApiError_1 = __importDefault(require("../errors/ApiError"));
 const http_status_1 = __importDefault(require("http-status"));
 const config_1 = __importDefault(require("../../config"));
 const jwtHelpers_1 = require("../../utils/jwtHelpers");
-const auth = () => {
+const client_1 = require("@prisma/client");
+const prisma = new client_1.PrismaClient();
+//auth
+const auth = (roles) => {
     return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const token = req.headers.authorization;
@@ -25,6 +28,17 @@ const auth = () => {
             }
             const verifiedUser = jwtHelpers_1.jwtHelpers.verifyToken(token, config_1.default.jwt.jwt_secret);
             req.userId = verifiedUser;
+            const user = yield prisma.user.findUnique({
+                where: {
+                    id: req.userId.userId
+                }
+            });
+            if (!user) {
+                throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'user not found');
+            }
+            if (!roles.includes(user.role)) {
+                throw new ApiError_1.default(http_status_1.default.FORBIDDEN, `Only ${roles} are allowed to access this route`);
+            }
             next();
         }
         catch (error) {

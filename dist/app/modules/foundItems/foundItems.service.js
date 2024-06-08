@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FoundItemServices = void 0;
+//found items services
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const createFoundItemsIntoDB = (userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -49,7 +50,19 @@ const getFoundItemsFromDB = (query) => __awaiter(void 0, void 0, void 0, functio
     ]);
     return { items, total };
 });
+const getMyFoundItemsFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = id.userId;
+    const [items, total] = yield prisma.$transaction([
+        prisma.foundItem.findMany({
+            where: { userId },
+            orderBy: { createdAt: 'desc' }
+        }),
+        prisma.foundItem.count({ where: { userId } })
+    ]);
+    return { items, total };
+});
 exports.FoundItemServices = {
     createFoundItemsIntoDB,
-    getFoundItemsFromDB
+    getFoundItemsFromDB,
+    getMyFoundItemsFromDB
 };

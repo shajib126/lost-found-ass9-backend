@@ -17,6 +17,7 @@ const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../utils/sendResponse"));
 const lostItems_services_1 = require("./lostItems.services");
+//lost item controller
 const createLostItem = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;
     const result = yield lostItems_services_1.LostItemsServices.createLostItemIntoDB(userId, req.body);

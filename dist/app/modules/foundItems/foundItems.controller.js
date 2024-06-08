@@ -17,6 +17,7 @@ const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../../utils/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../utils/sendResponse"));
 const foundItems_service_1 = require("./foundItems.service");
+//found items
 const createFoundItem = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = req.userId;
     const result = yield foundItems_service_1.FoundItemServices.createFoundItemsIntoDB(userId, req.body);
@@ -36,7 +37,17 @@ const getFoundItems = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result
     });
 }));
+const getMyFoundItems = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield foundItems_service_1.FoundItemServices.getMyFoundItemsFromDB(req.userId);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'Found items retrieved successfully',
+        data: result
+    });
+}));
 exports.FoundItemsController = {
     createFoundItem,
-    getFoundItems
+    getFoundItems,
+    getMyFoundItems
 };

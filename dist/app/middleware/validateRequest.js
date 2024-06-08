@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+//validate request
 const validateRequest = (schema) => (req, res, next) => {
     try {
         schema.parse({

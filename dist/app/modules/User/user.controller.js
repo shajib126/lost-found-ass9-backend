@@ -65,10 +65,42 @@ const changePassword = (0, catchAsync_1.default)((req, res) => __awaiter(void 0,
         data: result
     });
 }));
+const users = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_service_1.UserServices.usersFromDB();
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'all users retrieve successfully',
+        data: result
+    });
+}));
+const user = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    const result = yield user_service_1.UserServices.userFromDB(userId);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: 'user retrieve successfully',
+        data: result
+    });
+}));
+const deactiveUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    const result = yield user_service_1.UserServices.deactiveUser(userId, req.body);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        statusCode: http_status_1.default.OK,
+        message: `user  ${req.body.deactivated ? 'deactivate' : 'Active'}  successfully`,
+        data: result
+    });
+}));
 exports.UserController = {
     register,
     login,
     myProfile,
     updateProfile,
-    changePassword
+    changePassword,
+    users,
+    user,
+    deactiveUser
 };

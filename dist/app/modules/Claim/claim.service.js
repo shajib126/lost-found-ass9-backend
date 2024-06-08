@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClaimServices = void 0;
+//claim services
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const createClaimIntoDB = (userId, payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,7 +28,14 @@ const createClaimIntoDB = (userId, payload) => __awaiter(void 0, void 0, void 0,
     });
     return claim;
 });
-const allClaimItemsFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const allClaimItemsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const claims = yield prisma.claim.findMany({
+        include: { user: true, foundItem: true },
+        orderBy: { createdAt: 'desc' }
+    });
+    return claims;
+});
+const myClaimItemsFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = id.userId;
     const claims = yield prisma.claim.findMany({
         where: {
@@ -39,5 +47,6 @@ const allClaimItemsFromDB = (id) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.ClaimServices = {
     createClaimIntoDB,
-    allClaimItemsFromDB
+    allClaimItemsFromDB,
+    myClaimItemsFromDB
 };
