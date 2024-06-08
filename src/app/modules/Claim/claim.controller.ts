@@ -2,7 +2,7 @@ import httpStatus from "http-status";
 import catchAsync from "../../../utils/catchAsync";
 import sendResponse from "../../../utils/sendResponse";
 import { ClaimServices } from "./claim.service";
-
+//claim
 const createClaim = catchAsync(async(req:any,res)=>{
     const result = await ClaimServices.createClaimIntoDB(req.userId,req.body)
     sendResponse(res,{

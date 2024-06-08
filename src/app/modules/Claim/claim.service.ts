@@ -1,3 +1,4 @@
+//claim services
 import { PrismaClient } from "@prisma/client";
 import { TClaim } from "./claim.interface";
 const prisma = new PrismaClient()

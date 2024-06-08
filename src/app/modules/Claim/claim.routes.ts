@@ -1,3 +1,4 @@
+//claim routes
 import express from 'express'
 import auth from '../../middleware/auth'
 import { ClaimController } from './claim.controller'
