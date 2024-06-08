@@ -24,12 +24,14 @@ return claim
 
 const allClaimItemsFromDB = async()=>{
 
-    const claims = await prisma.claim.findMany({
-        
-        include:{user:true,foundItem:true},
-        orderBy:{createdAt:'desc'}
-    })
-    return claims
+    const [claims,total] = await prisma.$transaction([
+        prisma.claim.findMany({
+            include:{user:true,foundItem:true}
+        }),
+        prisma.claim.count()
+    ])
+    
+    return {claims,total}
 }
 
 const myClaimItemsFromDB = async(id:any)=>{

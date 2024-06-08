@@ -166,8 +166,18 @@ export const usersFromDB = async()=>{
  }
 
  export const deactiveUser = async(id:string,payload:any)=>{
+  
+   
     
-    const query = {deactivated:payload.deactivated}
+    const query:any = {}
+    if(payload.deactivated == 'true'){
+        query.deactivated = true
+    }
+    if(payload.deactivated == 'false'){
+        query.deactivated = false
+    }
+    console.log(query);
+    
     const user = await prisma.user.update({
         where:{id},
         data:query,
