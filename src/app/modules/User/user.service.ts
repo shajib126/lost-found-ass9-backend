@@ -1,3 +1,4 @@
+//user
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcryptjs'
 import jwt, { Secret } from 'jsonwebtoken'
