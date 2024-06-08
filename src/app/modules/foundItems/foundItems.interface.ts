@@ -1,3 +1,4 @@
+//found items interface
 export type TFoundItems = {
     categoryId:string;
     foundItemName:string;
