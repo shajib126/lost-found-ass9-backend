@@ -35,6 +35,11 @@ const loginIntoDB = async(payload:TLogin)=>{
             email
         }
     })
+    
+    
+    if(user?.deactivated){
+        throw new ApiError(httpStatus.UNAUTHORIZED,'This account is deactive!')
+    }
     if(!user || !await bcrypt.compare(password,user.password)){
         throw new ApiError(401,'Invalid credentials')
     }
@@ -176,7 +181,6 @@ export const usersFromDB = async()=>{
     if(payload.deactivated == 'false'){
         query.deactivated = false
     }
-    console.log(query);
     
     const user = await prisma.user.update({
         where:{id},

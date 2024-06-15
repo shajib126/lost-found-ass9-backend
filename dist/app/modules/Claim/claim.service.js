@@ -29,11 +29,13 @@ const createClaimIntoDB = (userId, payload) => __awaiter(void 0, void 0, void 0,
     return claim;
 });
 const allClaimItemsFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const claims = yield prisma.claim.findMany({
-        include: { user: true, foundItem: true },
-        orderBy: { createdAt: 'desc' }
-    });
-    return claims;
+    const [claims, total] = yield prisma.$transaction([
+        prisma.claim.findMany({
+            include: { user: true, foundItem: true }
+        }),
+        prisma.claim.count()
+    ]);
+    return { claims, total };
 });
 const myClaimItemsFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const userId = id.userId;

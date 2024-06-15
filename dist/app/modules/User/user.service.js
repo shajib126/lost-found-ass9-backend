@@ -55,6 +55,9 @@ const loginIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () 
             email
         }
     });
+    if (user === null || user === void 0 ? void 0 : user.deactivated) {
+        throw new ApiError_1.default(http_status_1.default.UNAUTHORIZED, 'This account is deactive!');
+    }
     if (!user || !(yield bcryptjs_1.default.compare(password, user.password))) {
         throw new ApiError_1.default(401, 'Invalid credentials');
     }
@@ -167,7 +170,13 @@ const userFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.userFromDB = userFromDB;
 const deactiveUser = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const query = { deactivated: payload.deactivated };
+    const query = {};
+    if (payload.deactivated == 'true') {
+        query.deactivated = true;
+    }
+    if (payload.deactivated == 'false') {
+        query.deactivated = false;
+    }
     const user = yield prisma.user.update({
         where: { id },
         data: query,
